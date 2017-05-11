@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # Config namespace and subdomain.
   namespace :api, defaults: { format: :json }, constraints: { subdomain: 'api' }, path: '/' do
     namespace :v1, path: '/', constraints: ApiVersionConstraint.new(version: 1, default: true) do
-      resources :users, only: [:create, :show]
+      resources :users, only: [:create, :show, :update]
     end
   end
 
