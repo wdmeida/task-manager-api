@@ -35,6 +35,13 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  def destroy
+    task = current_user.tasks.find(params[:id])
+    task.destroy
+
+    head :no_content
+  end
+
   private
     def task_params
       params.require(:task).permit(:title, :description, :deadline, :done)
