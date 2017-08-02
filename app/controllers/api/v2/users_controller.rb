@@ -1,6 +1,6 @@
 class Api::V2::UsersController < ApplicationController
   before_action :authenticate_with_token!, only: [:destroy, :update]
-  respond_to :json
+  # respond_to :json
 
   def create
     user = User.new(user_params)
@@ -20,7 +20,8 @@ class Api::V2::UsersController < ApplicationController
   def show
     begin
       user = User.find(params[:id])
-      respond_with user
+      #respond_with user
+      render json: user, status: 200
     rescue
       head 404
     end
