@@ -56,3 +56,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Flexible authentication solution for Rails with Warden.
 gem 'devise'
+# ActiveModel::Serializer implementation and Rails hooks 
+gem 'active_model_serializers', '~> 0.10.0'
