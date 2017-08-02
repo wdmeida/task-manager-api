@@ -1,7 +1,7 @@
 require 'api_version_constraint'
 
 Rails.application.routes.draw do
-  devise_for :users, only: [:sessions], controller: { sessions: 'api/v1/sessions' }
+  devise_for :users, only: [:sessions], controller: { sessions: 'api/v2/sessions' }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
