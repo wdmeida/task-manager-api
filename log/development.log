@@ -1328,3 +1328,32 @@ Processing by Api::V2::TasksController#index as JSON
 Completed 200 OK in 29ms (Views: 12.8ms | ActiveRecord: 1.1ms)
 
 
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  `tasks`.* FROM `tasks` ORDER BY `tasks`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM `tasks`[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT  `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 3 LIMIT 1[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%tudar%')[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estu%')[0m
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%')[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%')[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%' AND `tasks`.`created_at` < '2017-07-07 12:00:00')[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%' AND `tasks`.`created_at` < '2017-08-03 12:00:00')[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT COUNT(*) FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%' AND `tasks`.`created_at` < '2017-08-07 12:00:00')[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%')[0m
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%')[0m
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%') ORDER BY `tasks`.`title` ASC[0m
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%') ORDER BY `tasks`.`title` ASC[0m
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%') ORDER BY `tasks`.`title` ASC[0m
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%') ORDER BY `tasks`.`title` DESC[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%') ORDER BY `tasks`.`title` DESC[0m
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE (`tasks`.`title` LIKE '%estudar%') ORDER BY `tasks`.`created_at` ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.2ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'paulo@santana.com' LIMIT 1[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = '5TpytEfYvsPs5HcMM5zc' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`) VALUES ('paulo@santana.com', '$2a$11$teoSCBwGixTFfN.7nSjymeSVSe/uzVFrHsidIbrQHnl8jNVSdFTC2', '2017-08-03 00:28:07', '2017-08-03 00:28:07', '5TpytEfYvsPs5HcMM5zc')[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT `users`.* FROM `users`[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT `users`.* FROM `users` WHERE (`users`.`email` LIKE '%paulo%')[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT `users`.* FROM `users` WHERE (`users`.`email` LIKE '%paulo%')[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT `users`.* FROM `users` WHERE (`users`.`email` LIKE '%\\.com%')[0m

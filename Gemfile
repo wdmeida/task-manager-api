@@ -30,6 +30,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   # RSpec for Rails-3
   gem 'rspec-rails', '~> 3.5'
+  gem 'pry-rails'
 end
 
 group :test do
@@ -58,3 +59,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 # ActiveModel::Serializer implementation and Rails hooks 
 gem 'active_model_serializers', '~> 0.10.0'
+# Object-based searching
+gem 'ransack'
