@@ -1658,3 +1658,140 @@ Completed 200 OK in 406ms (Views: 2.2ms | ActiveRecord: 8.1ms)
   [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
+Started POST "/auth" for 10.0.2.2 at 2017-09-15 17:56:17 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"password"=>"[FILTERED]", "email"=>"fagner@teste.com", "password_confirmation"=>"[FILTERED]", "name"=>"Fagner Almeida", "subdomain"=>"api"}
+Unpermitted parameters: name, subdomain, format
+Unpermitted parameters: name, subdomain, format
+Unpermitted parameters: name, subdomain, format
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM `users` WHERE `users`.`provider` = 'email' AND `users`.`email` = 'fagner@teste.com'[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = 'Kx8kYEdnHzsuF5AHWFXZ' LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`, `uid`, `tokens`) VALUES ('fagner@teste.com', '$2a$11$oCxTYPf.Dugi2JUqOHR1HuYsS3ImrR4iSv.0oOhmq9FqarclNavL2', '2017-09-15 17:56:18', '2017-09-15 17:56:18', 'Kx8kYEdnHzsuF5AHWFXZ', 'fagner@teste.com', '{}')[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'Kx8kYEdnHzsuF5AHWFXZ' AND (`users`.`id` != 2) LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"L-xIxBheEU2LJ8O8k5Pugg\":{\"token\":\"$2a$10$vi.xeozMSZIuRhaxNBLX6.iuM2l9LR7ZlNU0NWXP9rEYHEnQlHYL6\",\"expiry\":1506707778}}' WHERE `users`.`id` = 2[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'Kx8kYEdnHzsuF5AHWFXZ' AND (`users`.`id` != 2) LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 2 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'Kx8kYEdnHzsuF5AHWFXZ' AND (`users`.`id` != 2) LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"L-xIxBheEU2LJ8O8k5Pugg\":{\"token\":\"$2a$10$zSQoqg545/wo4T5aZb0f8Ox3Xqcix0baw/n7EAsGvhZK3F.9W0G1W\",\"expiry\":1506707778,\"last_token\":\"$2a$10$vi.xeozMSZIuRhaxNBLX6.iuM2l9LR7ZlNU0NWXP9rEYHEnQlHYL6\",\"updated_at\":\"2017-09-15T17:56:18.616+00:00\"}}' WHERE `users`.`id` = 2[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.27ms)
+Completed 200 OK in 678ms (Views: 53.9ms | ActiveRecord: 11.6ms)
+
+
+Started POST "/auth" for 10.0.2.2 at 2017-09-15 18:03:48 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"password"=>"[FILTERED]", "email"=>"paulinha@teste.com", "password_confirmation"=>"[FILTERED]", "name"=>"Paula Fernandes", "subdomain"=>"api"}
+Unpermitted parameters: subdomain, format
+Unpermitted parameters: subdomain, format
+Unpermitted parameters: subdomain, format
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM `users` WHERE `users`.`provider` = 'email' AND `users`.`email` = 'paulinha@teste.com'[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = 'UUFVQKQHyJjyGU9XSEEZ' LIMIT 1[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`, `uid`, `name`, `tokens`) VALUES ('paulinha@teste.com', '$2a$11$d940zcGc2KtBbI9LAISg2.yHg.6DVgZ7Fa/Qb5TUdcxUFKyC2XX.u', '2017-09-15 18:03:49', '2017-09-15 18:03:49', 'UUFVQKQHyJjyGU9XSEEZ', 'paulinha@teste.com', 'Paula Fernandes', '{}')[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"RLjXwf3aJuAQyLShH_4OlA\":{\"token\":\"$2a$10$3qR.tJ/XJCHWQ9hqkFNlEOWC.mGvIqgVzeAu0M2vccOOUwiXmbPjK\",\"expiry\":1506708229}}' WHERE `users`.`id` = 3[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.2ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 3 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"RLjXwf3aJuAQyLShH_4OlA\":{\"token\":\"$2a$10$HLapbxKDqw63cD7wFKtc7O3k1/MrNnXtvGBuIKZXnURNkqVr9p36G\",\"expiry\":1506708229,\"last_token\":\"$2a$10$3qR.tJ/XJCHWQ9hqkFNlEOWC.mGvIqgVzeAu0M2vccOOUwiXmbPjK\",\"updated_at\":\"2017-09-15T18:03:49.735+00:00\"}}' WHERE `users`.`id` = 3[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.3ms)
+Completed 200 OK in 890ms (Views: 122.7ms | ActiveRecord: 17.4ms)
+
+
+Started PUT "/auth" for 10.0.2.2 at 2017-09-15 18:05:43 +0000
+Processing by DeviseTokenAuth::RegistrationsController#update as JSON
+  Parameters: {"name"=>"Paula Araújo", "email"=>"paula_araujo@gmail.com", "subdomain"=>"api"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paulinha@teste.com' LIMIT 1[0m
+Unpermitted parameters: name, subdomain, format
+Unpermitted parameters: name, subdomain, format
+Unpermitted parameters: name, subdomain, format
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE `users` SET `email` = 'paula_araujo@gmail.com', `uid` = 'paula_araujo@gmail.com', `updated_at` = '2017-09-15 18:05:43' WHERE `users`.`id` = 3[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.35ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 3 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"RLjXwf3aJuAQyLShH_4OlA\":{\"token\":\"$2a$10$IWRqDbhFGBk7pDrwWimQROc8SIgkIULgQlRojY1terSpa7hACwQ9K\",\"expiry\":1506708344,\"last_token\":\"$2a$10$HLapbxKDqw63cD7wFKtc7O3k1/MrNnXtvGBuIKZXnURNkqVr9p36G\",\"updated_at\":\"2017-09-15T18:05:44.015+00:00\"}}', `updated_at` = '2017-09-15 18:05:44' WHERE `users`.`id` = 3[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 222ms (Views: 1.5ms | ActiveRecord: 7.0ms)
+
+
+Started PUT "/auth" for 10.0.2.2 at 2017-09-15 18:08:00 +0000
+Processing by DeviseTokenAuth::RegistrationsController#update as JSON
+  Parameters: {"name"=>"Paula Araújo de Castro", "email"=>"paula_araujinho_castro@gmail.com", "subdomain"=>"api"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paulinha@teste.com' LIMIT 1[0m
+Unpermitted parameters: name, subdomain, format
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paulinha@teste.com' LIMIT 1[0m  [["uid", "paulinha@teste.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.18ms)
+Completed 404 Not Found in 7ms (Views: 2.2ms | ActiveRecord: 0.7ms)
+
+
+Started PUT "/auth" for 10.0.2.2 at 2017-09-15 18:08:24 +0000
+Processing by DeviseTokenAuth::RegistrationsController#update as JSON
+  Parameters: {"name"=>"Paula Araújo de Castro", "email"=>"paula_araujinho_castro@gmail.com", "subdomain"=>"api"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m
+Unpermitted parameters: name, subdomain, format
+Unpermitted parameters: name, subdomain, format
+Unpermitted parameters: name, subdomain, format
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35mSQL (2.1ms)[0m  [1m[33mUPDATE `users` SET `email` = 'paula_araujinho_castro@gmail.com', `uid` = 'paula_araujinho_castro@gmail.com', `updated_at` = '2017-09-15 18:08:24' WHERE `users`.`id` = 3[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.23ms)
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 3 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'UUFVQKQHyJjyGU9XSEEZ' AND (`users`.`id` != 3) LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"RLjXwf3aJuAQyLShH_4OlA\":{\"token\":\"$2a$10$D6Ww/otW8Ugi5EU.RvHi2u4hSbGhDBo1TMqqNGJGkFskngroyQS5y\",\"expiry\":1506708504,\"last_token\":\"$2a$10$IWRqDbhFGBk7pDrwWimQROc8SIgkIULgQlRojY1terSpa7hACwQ9K\",\"updated_at\":\"2017-09-15T18:08:24.783+00:00\"}}' WHERE `users`.`id` = 3[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 234ms (Views: 1.8ms | ActiveRecord: 10.1ms)
+
+
+Started PUT "/auth" for 10.0.2.2 at 2017-09-15 18:09:01 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by DeviseTokenAuth::RegistrationsController#update as JSON
+  Parameters: {"name"=>"Paula Araújo de Castro", "email"=>"paula_araujo@gmail.com", "subdomain"=>"api"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m
+Unpermitted parameters: subdomain, format
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m  [["uid", "paula_araujo@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.4ms)
+Completed 404 Not Found in 223ms (Views: 130.0ms | ActiveRecord: 1.8ms)
+
+
+Started PUT "/auth" for 10.0.2.2 at 2017-09-15 18:09:21 +0000
+Processing by DeviseTokenAuth::RegistrationsController#update as JSON
+  Parameters: {"name"=>"Paula Araújo de Castro", "email"=>"paula_araujinho_castro@gmail.com", "subdomain"=>"api"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m
+Unpermitted parameters: subdomain, format
+  [1m[36mCACHE (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m  [["uid", "paula_araujo@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (1.06ms)
+Completed 404 Not Found in 13ms (Views: 6.5ms | ActiveRecord: 1.0ms)
+
+
+Started PUT "/auth" for 10.0.2.2 at 2017-09-15 18:10:43 +0000
+Processing by DeviseTokenAuth::RegistrationsController#update as JSON
+  Parameters: {"name"=>"Paula Araújo de Castro", "email"=>"paula_araujinho_castro@gmail.com", "subdomain"=>"api"}
+  [1m[36mUser Load (3.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m
+Unpermitted parameters: subdomain, format
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'paula_araujo@gmail.com' LIMIT 1[0m  [["uid", "paula_araujo@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.2ms)
+Completed 404 Not Found in 21ms (Views: 5.0ms | ActiveRecord: 3.5ms)
+
+
