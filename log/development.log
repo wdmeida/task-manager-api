@@ -1649,3 +1649,12 @@ Unpermitted parameters: subdomain, format
 Completed 200 OK in 406ms (Views: 2.2ms | ActiveRecord: 8.1ms)
 
 
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (122.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'it5DRXNoX2xKzi-xsvfs' AND (`users`.`id` != 1) LIMIT 1[0m
+  [1m[35mSQL (78.2ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"L5otjnmkVBYcRqoGuHhTdg\":{\"token\":\"$2a$10$HrBxXbAOag4ygpzxn0zv.eedJRsAutkotRaGygp04UUidZ4Ju75iS\",\"expiry\":1505688995,\"last_token\":\"$2a$10$taj4ighPknZHD0jRB6eNMuNzH/5nq.DJmVPL/QmK5yDQFUxvgolca\",\"updated_at\":\"2017-09-03T22:56:35.982+00:00\"},\"QN_7JyFJVnu3PM1WJPjsSA\":{\"token\":\"$2a$10$VZeq4DKY68Q4Du9oUSwPI.ZDumKg9Yg6zgctZq.rhGfnnTM3ctmYa\",\"expiry\":1505689385,\"last_token\":\"$2a$10$60J.sCHobuniW./Qo9DDZuV.xTSL0GPFLXa0z46OTJNBCjkGL3R9m\",\"updated_at\":\"2017-09-03T23:03:05.753+00:00\"},\"cBuWc5RbcR_iB6V6BMYMhg\":{\"token\":\"$2a$10$3sSpDE9KY/3h2KNkpsCWy.DCBcSZOdvpL/dIaLkqP6l8AdFOHlYNG\",\"expiry\":1506702302,\"last_token\":null,\"updated_at\":\"2017-09-15T16:25:02.504+00:00\"}}', `updated_at` = '2017-09-15 16:25:02' WHERE `users`.`id` = 1[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` ORDER BY `users`.`id` ASC LIMIT 1[0m
