@@ -15,16 +15,11 @@ Para executar o projeto, entre no diretório 'task-manager-api', no terminal e i
 
 ```$ bundle install```
 
-O banco de dados utilizado foi o MySQL. Caso queira modificar o mesmo, basta alterar as configurações do arquivo no endereço ***'config/database.yml'*** com as configurações desejadas, logo após executar o comando abaixo para criar a base de dados e executar as migrações:
+O banco de dados utilizado foi o **MySQL**. É necessário alterar as configurações para utilização do mesmo no arquivo ***config/database.yml***, não esquecendo de modificar os parâmetros **username** e **password** para um usuário válido cadastrado na máquina local em que a api será executada.
+Logo após a configuração, executar o comando abaixo para criar a base de dados e executar as migrações:
 
 ```$ rails db:create db:migrate```
 
 Após isso, inicie o servidor da aplicação:
 
 ```$ rails server```
-
-Utilize o comando abaixo para verificar as rotas disponíveis:
-
-```$ rails routes```
-
-
