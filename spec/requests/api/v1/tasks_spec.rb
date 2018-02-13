@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks API' do
-  before { host! 'api.taskmanager.dev' }
+  before { host! 'api.taskmanager.test' }
 
   let!(:user) { create(:user) }
   let(:headers) do

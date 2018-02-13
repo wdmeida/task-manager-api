@@ -13,7 +13,7 @@ RSpec.describe 'Users API', type: :request do
         }
     end
 
-    before { host! 'api.taskmanager.dev' }
+    before { host! 'api.taskmanager.test' }
 
     describe 'GET /auth/validate_token' do
         context 'when the request headers are valid' do
