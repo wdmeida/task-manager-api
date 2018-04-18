@@ -1,5 +1,7 @@
 # Task Manager API
 
+[![Build Status](https://travis-ci.org/wdmeida/task-manager-api.svg?branch=master)](https://travis-ci.org/wdmeida/task-manager-api)
+
 ## O Projeto
 
 Projeto desenvolvido durante o Curso de [**API Rails 5 + Aplicação Angular 4 + App Móvel NativeScript**](https://www.udemy.com/rails-angular-nativescript-apis-e-apicativos-android-ios-e-web/learn/v4/overview). O projeto consiste no desenvolvimento de uma API de gerenciamento de tarefas, utilizando testes, com Ruby on Rails 5.

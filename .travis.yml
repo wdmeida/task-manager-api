@@ -1,0 +1,38 @@
+language: ruby
+
+rvm:
+  - 2.4.1
+
+cache: bundler
+
+gemfile:
+  - Gemfile
+
+services:
+  - mysql
+
+dist: trusty
+
+sudo: required
+
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
+before_install:
+  - 'rm ${BUNDLE_GEMFILE}.lock'
+  - gem update --system
+  - mysql -u travis -e "CREATE DATABASE IF NOT EXISTS task_manager_api_test;"
+
+after_install:
+  - rails spring rspec
+
+notifications:
+  email:
+    on_pull_request: false
+    on_success: change
+    on_failure: always
