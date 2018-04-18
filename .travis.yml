@@ -10,7 +10,6 @@ gemfile:
 services:
   - mysql
 before_install:
-  - mysql -e 'CREATE DATABASE task-manager-api_test;'
   - 'rm ${BUNDLE_GEMFILE}.lock'
   - gem update --system
 
