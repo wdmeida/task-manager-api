@@ -1,0 +1,24 @@
+language: ruby
+
+rvm:
+  - 2.4.1
+
+cache: bundler
+
+gemfile:
+  - Gemfile
+services:
+  - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE task-manager-api_test;'
+  - 'rm ${BUNDLE_GEMFILE}.lock'
+  - gem update --system
+
+after_install:
+  - rails spring rspec
+
+notifications:
+  email:
+    on_pull_request: false
+    on_success: change
+    on_failure: always
