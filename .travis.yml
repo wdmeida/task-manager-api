@@ -12,6 +12,7 @@ services:
 before_install:
   - 'rm ${BUNDLE_GEMFILE}.lock'
   - gem update --system
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS task-manager-api_test;'
 
 after_install:
   - rails spring rspec
