@@ -17,6 +17,14 @@ before_install:
 after_install:
   - rails spring rspec
 
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
 notifications:
   email:
     on_pull_request: false
