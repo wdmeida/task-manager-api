@@ -7,10 +7,14 @@ cache: bundler
 
 gemfile:
   - Gemfile
+
 services:
   - mysql
+
 dist: trusty
+
 sudo: required
+
 addons:
   apt:
     sources:
@@ -18,10 +22,11 @@ addons:
     packages:
       - mysql-server
       - mysql-client
+
 before_install:
   - 'rm ${BUNDLE_GEMFILE}.lock'
   - gem update --system
-  - mysql -u travis -e "CREATE DATABASE IF NOT EXISTS task-manager-api_test;"
+  - mysql -u travis -e "CREATE DATABASE IF NOT EXISTS task_manager_api_test;"
 
 after_install:
   - rails spring rspec
