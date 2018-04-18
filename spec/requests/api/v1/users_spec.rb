@@ -43,7 +43,7 @@ RSpec.describe 'Users API', type: :request do
         end
 
         context 'when the request params are valid' do
-            let(:user_params) { FactoryGirl.attributes_for(:user) }
+            let(:user_params) { attributes_for(:user) }
 
             it 'returns status code 201' do
                 expect(response).to have_http_status(201)
@@ -55,7 +55,7 @@ RSpec.describe 'Users API', type: :request do
         end
 
         context 'when the request params are invalid' do
-            let(:user_params) { FactoryGirl.attributes_for(:user, email: 'invalid_mail@') }
+            let(:user_params) { attributes_for(:user, email: 'invalid_mail@') }
 
             it 'returns status code 422' do
                 expect(response).to have_http_status(422)

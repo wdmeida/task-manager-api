@@ -40,8 +40,8 @@ RSpec.configure do |config|
     end
   end
 
-  # Config factory girls
-  config.include FactoryGirl::Syntax::Methods
+  # Config factory bot
+  config.include FactoryBot::Syntax::Methods
 
   # Include helper create from test of request
   config.include RequestSpecHelper
