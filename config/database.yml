@@ -3,13 +3,17 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password: "root"
+  password: root
   host: mysql
 
 development:
   <<: *default
-  database: dev
+  database: task_manager_api_development
 
 test:
   <<: *default
-  database: dev
+  database: task_manager_api_test
+
+production:
+  <<: *default
+  database: task_manager_api_production
