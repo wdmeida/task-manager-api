@@ -216,3 +216,1276 @@ Migrating to DeviseTokenAuthCreateUsers (20170903210334)
   [1m[35m (27.9ms)[0m  [1m[35mCOMMIT[0m
   [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('6102324819594780000')[0m
   [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (4.8ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (17.0ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (771.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS `task-manager-api_development`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE DATABASE `task-manager-api_development` DEFAULT CHARACTER SET `utf8`[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (271.0ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (268.7ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT GET_LOCK('6102324819594780000', 0)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to DeviseCreateUsers (20170502194618)
+  [1m[35m (299.4ms)[0m  [1m[35mCREATE TABLE `users` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (276.8ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_email`  ON `users` (`email`) [0m
+  [1m[35m (222.2ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_reset_password_token`  ON `users` (`reset_password_token`) [0m
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (19.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170502194618')[0m
+  [1m[35m (51.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAuthTokenToUsers (20170512010114)
+  [1m[35m (518.9ms)[0m  [1m[35mALTER TABLE `users` ADD `auth_token` varchar(255)[0m
+  [1m[35m (243.3ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_auth_token`  ON `users` (`auth_token`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170512010114')[0m
+  [1m[35m (65.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTasks (20170612013410)
+  [1m[35m (300.7ms)[0m  [1m[35mCREATE TABLE `tasks` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `title` varchar(255), `description` text, `done` tinyint(1) DEFAULT FALSE, `deadline` datetime, `user_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_tasks_on_user_id`  (`user_id`), CONSTRAINT `fk_rails_4d2a9e4d7e`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+) ENGINE=InnoDB[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170612013410')[0m
+  [1m[35m (30.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseTokenAuthCreateUsers (20170903210334)
+  [1m[35m (599.1ms)[0m  [1m[35mALTER TABLE `users` ADD `provider` varchar(255) DEFAULT 'email' NOT NULL[0m
+  [1m[35m (559.5ms)[0m  [1m[35mALTER TABLE `users` ADD `uid` varchar(255) DEFAULT '' NOT NULL[0m
+  [1m[35m (583.2ms)[0m  [1m[35mALTER TABLE `users` ADD `name` varchar(255)[0m
+  [1m[35m (548.2ms)[0m  [1m[35mALTER TABLE `users` ADD `tokens` text[0m
+  [1m[35m (222.0ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_uid_and_provider`  ON `users` (`uid`, `provider`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170903210334')[0m
+  [1m[35m (31.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (1.3ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2018-04-25 00:43:37', '2018-04-25 00:43:37')[0m
+  [1m[35m (28.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT RELEASE_LOCK('6102324819594780000')[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT GET_LOCK('6102324819594780000', 0)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.7ms)[0m  [1m[33mUPDATE `ar_internal_metadata` SET `value` = 'development', `updated_at` = '2018-04-25 00:45:15' WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (56.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT RELEASE_LOCK('6102324819594780000')[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `ar_internal_metadata`.`value` FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment'[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (1029.4ms)[0m  [1m[35mDROP DATABASE IF EXISTS `task-manager-api_development`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE DATABASE `task-manager-api_development` DEFAULT CHARACTER SET `utf8`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE DATABASE `task-manager-api_development` DEFAULT CHARACTER SET `utf8`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (568.0ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (266.2ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT GET_LOCK('6102324819594780000', 0)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to DeviseCreateUsers (20170502194618)
+  [1m[35m (311.3ms)[0m  [1m[35mCREATE TABLE `users` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (251.6ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_email`  ON `users` (`email`) [0m
+  [1m[35m (199.7ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_reset_password_token`  ON `users` (`reset_password_token`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170502194618')[0m
+  [1m[35m (29.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAuthTokenToUsers (20170512010114)
+  [1m[35m (526.8ms)[0m  [1m[35mALTER TABLE `users` ADD `auth_token` varchar(255)[0m
+  [1m[35m (210.9ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_auth_token`  ON `users` (`auth_token`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170512010114')[0m
+  [1m[35m (86.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTasks (20170612013410)
+  [1m[35m (355.7ms)[0m  [1m[35mCREATE TABLE `tasks` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY, `title` varchar(255), `description` text, `done` tinyint(1) DEFAULT FALSE, `deadline` datetime, `user_id` int, `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL,  INDEX `index_tasks_on_user_id`  (`user_id`), CONSTRAINT `fk_rails_4d2a9e4d7e`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+) ENGINE=InnoDB[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170612013410')[0m
+  [1m[35m (28.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseTokenAuthCreateUsers (20170903210334)
+  [1m[35m (593.4ms)[0m  [1m[35mALTER TABLE `users` ADD `provider` varchar(255) DEFAULT 'email' NOT NULL[0m
+  [1m[35m (659.6ms)[0m  [1m[35mALTER TABLE `users` ADD `uid` varchar(255) DEFAULT '' NOT NULL[0m
+  [1m[35m (517.5ms)[0m  [1m[35mALTER TABLE `users` ADD `name` varchar(255)[0m
+  [1m[35m (604.6ms)[0m  [1m[35mALTER TABLE `users` ADD `tokens` text[0m
+  [1m[35m (421.7ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_uid_and_provider`  ON `users` (`uid`, `provider`) [0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20170903210334')[0m
+  [1m[35m (31.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT  `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2018-04-25 00:45:27', '2018-04-25 00:45:27')[0m
+  [1m[35m (33.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT RELEASE_LOCK('6102324819594780000')[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-24 22:12:53 -0300
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.25ms)
+Completed 401 Unauthorized in 1008ms (Views: 13.7ms | ActiveRecord: 3.4ms)
+
+
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (1.6ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'wdmeida@gmail.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = 'xVwuVyHnTBmNTLrfHFH5' LIMIT 1[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`, `uid`, `name`, `tokens`) VALUES ('wdmeida@gmail.com', '$2a$11$XKlpUe.amcFFkvX73yJSPutQrhB4bYXoe0y7kie.OZ0ub8Qz44iTm', '2018-04-25 01:14:39', '2018-04-25 01:14:39', 'xVwuVyHnTBmNTLrfHFH5', 'wdmeida@gmail.com', 'Wagner Almeida', '{}')[0m
+  [1m[35m (48.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-24 22:15:22 -0300
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"expiry\":1525828524}}', `updated_at` = '2018-04-25 01:15:24' WHERE `users`.`id` = 90[0m
+  [1m[35m (31.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (1.9ms)[0m  [1m[33mUPDATE `users` SET `sign_in_count` = 1, `current_sign_in_at` = '2018-04-25 01:15:24', `last_sign_in_at` = '2018-04-25 01:15:24', `current_sign_in_ip` = '127.0.0.1', `last_sign_in_ip` = '127.0.0.1' WHERE `users`.`id` = 90[0m
+  [1m[35m (33.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.22ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"}}', `updated_at` = '2018-04-25 01:15:25' WHERE `users`.`id` = 90[0m
+  [1m[35m (316.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 1859ms (Views: 15.4ms | ActiveRecord: 390.1ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-24 22:15:25 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$FUmNzpYptNx34bmvs//HYOa7WGeb.v5UIJR2LF3DqSpGAp70zqtCm\",\"expiry\":1525828526}}', `updated_at` = '2018-04-25 01:15:26' WHERE `users`.`id` = 90[0m
+  [1m[35m (36.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `sign_in_count` = 2, `current_sign_in_at` = '2018-04-25 01:15:26' WHERE `users`.`id` = 90[0m
+  [1m[35m (36.7ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.4ms)
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$7xCtJ91ICmxXYRuzRRfIju7pbpNhlVnnqOwR8zYZLG0fAPHtU8idW\",\"expiry\":1525828526,\"last_token\":\"$2a$10$FUmNzpYptNx34bmvs//HYOa7WGeb.v5UIJR2LF3DqSpGAp70zqtCm\",\"updated_at\":\"2018-04-24T22:15:26.188-03:00\"}}' WHERE `users`.`id` = 90[0m
+  [1m[35m (33.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 499ms (Views: 1.3ms | ActiveRecord: 113.0ms)
+
+
+  [1m[35m (64.5ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:40:04 -0300
+  [1m[35m (0.5ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (17.7ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (38.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.33ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (21.6ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$5dryrZIHDIKS6voS2/XgE.RKOGeLDYtCMZsQiqoVkepNPcx4FfR.i\",\"expiry\":1525905607,\"last_token\":\"$2a$10$7xCtJ91ICmxXYRuzRRfIju7pbpNhlVnnqOwR8zYZLG0fAPHtU8idW\",\"updated_at\":\"2018-04-25T19:40:07.529-03:00\"}}', `updated_at` = '2018-04-25 22:40:07' WHERE `users`.`id` = 90[0m
+  [1m[35m (87.6ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 2936ms (Views: 7.5ms | ActiveRecord: 151.5ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:46:38 -0300
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.29ms)
+  [1m[36mUser Exists (2.3ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (1.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (2.4ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$MXzBO/tWDiDVJSWYMfwp/ubGw88J32Z5JSjLQBEJZFMdntLtaQLP6\",\"expiry\":1525905998,\"last_token\":\"$2a$10$5dryrZIHDIKS6voS2/XgE.RKOGeLDYtCMZsQiqoVkepNPcx4FfR.i\",\"updated_at\":\"2018-04-25T19:46:38.568-03:00\"}}', `updated_at` = '2018-04-25 22:46:38' WHERE `users`.`id` = 90[0m
+  [1m[35m (89.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 333ms (Views: 1.2ms | ActiveRecord: 98.9ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:46:42 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.26ms)
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (1.2ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$MXzBO/tWDiDVJSWYMfwp/ubGw88J32Z5JSjLQBEJZFMdntLtaQLP6\",\"expiry\":1525905998,\"last_token\":\"$2a$10$5dryrZIHDIKS6voS2/XgE.RKOGeLDYtCMZsQiqoVkepNPcx4FfR.i\",\"updated_at\":\"2018-04-25T19:46:42.892-03:00\"}}', `updated_at` = '2018-04-25 22:46:42' WHERE `users`.`id` = 90[0m
+  [1m[35m (55.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 163ms (Views: 1.1ms | ActiveRecord: 59.4ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:46:53 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.28ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.3ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$XXFoeeiczGZd2FAYitdIYOAf7E5xShD0Kz0DDgMTAiNoInGpdowQK\",\"expiry\":1525906013,\"last_token\":\"$2a$10$MXzBO/tWDiDVJSWYMfwp/ubGw88J32Z5JSjLQBEJZFMdntLtaQLP6\",\"updated_at\":\"2018-04-25T19:46:53.786-03:00\"}}', `updated_at` = '2018-04-25 22:46:53' WHERE `users`.`id` = 90[0m
+  [1m[35m (47.5ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 161ms (Views: 0.9ms | ActiveRecord: 51.1ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:46:58 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.28ms)
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (4.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (4.2ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$XXFoeeiczGZd2FAYitdIYOAf7E5xShD0Kz0DDgMTAiNoInGpdowQK\",\"expiry\":1525906013,\"last_token\":\"$2a$10$MXzBO/tWDiDVJSWYMfwp/ubGw88J32Z5JSjLQBEJZFMdntLtaQLP6\",\"updated_at\":\"2018-04-25T19:46:58.392-03:00\"}}', `updated_at` = '2018-04-25 22:46:58' WHERE `users`.`id` = 90[0m
+  [1m[35m (46.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 220ms (Views: 1.0ms | ActiveRecord: 58.4ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:50:03 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (1.2ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$4WqZtYbUH2mV3PHeOSkLK.ExlRDCCP8e.Re4pqE6R2c5qxnkUL..i\",\"expiry\":1525906203,\"last_token\":\"$2a$10$XXFoeeiczGZd2FAYitdIYOAf7E5xShD0Kz0DDgMTAiNoInGpdowQK\",\"updated_at\":\"2018-04-25T19:50:03.713-03:00\"}}', `updated_at` = '2018-04-25 22:50:03' WHERE `users`.`id` = 90[0m
+  [1m[35m (49.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 168ms (Views: 0.6ms | ActiveRecord: 53.9ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:50:08 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.28ms)
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$4WqZtYbUH2mV3PHeOSkLK.ExlRDCCP8e.Re4pqE6R2c5qxnkUL..i\",\"expiry\":1525906203,\"last_token\":\"$2a$10$XXFoeeiczGZd2FAYitdIYOAf7E5xShD0Kz0DDgMTAiNoInGpdowQK\",\"updated_at\":\"2018-04-25T19:50:08.293-03:00\"}}', `updated_at` = '2018-04-25 22:50:08' WHERE `users`.`id` = 90[0m
+  [1m[35m (47.0ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 152ms (Views: 1.1ms | ActiveRecord: 50.1ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:50:56 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.17ms)
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$yyx.c0Y3JSILOimy9jTT6e26XpArN.vgNhi2Rbth2T86RwkbuVICG\",\"expiry\":1525906256,\"last_token\":\"$2a$10$4WqZtYbUH2mV3PHeOSkLK.ExlRDCCP8e.Re4pqE6R2c5qxnkUL..i\",\"updated_at\":\"2018-04-25T19:50:56.898-03:00\"}}', `updated_at` = '2018-04-25 22:50:56' WHERE `users`.`id` = 90[0m
+  [1m[35m (48.6ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 159ms (Views: 0.6ms | ActiveRecord: 51.3ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:52:07 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.13ms)
+Completed 401 Unauthorized in 188ms (Views: 92.4ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:53:26 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.28ms)
+Completed 401 Unauthorized in 203ms (Views: 93.0ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:54:03 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 401 Unauthorized in 188ms (Views: 89.9ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:54:42 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.14ms)
+Completed 401 Unauthorized in 214ms (Views: 108.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:55:13 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 401 Unauthorized in 208ms (Views: 106.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:58:14 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 401 Unauthorized in 243ms (Views: 101.5ms | ActiveRecord: 0.8ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-04-25 19:58:18 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-25 19:58:18 -0300
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+  Parameters: {"token_validation"=>{}}
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.11ms)
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+Completed 404 Not Found in 292ms (Views: 95.4ms | ActiveRecord: 0.5ms)
+
+
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m  [["uid", "wdmeida@gmail.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.17ms)
+Completed 401 Unauthorized in 202ms (Views: 101.5ms | ActiveRecord: 1.5ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-04-25 20:01:39 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 404 Not Found in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms)
+
+
+  [1m[35m (125.0ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started POST "/auth" for 127.0.0.1 at 2018-04-26 19:25:30 -0300
+  [1m[35m (1.1ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"wdmeida@gmail.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (25.2ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'wdmeida@gmail.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.28ms)
+Completed 422 Unprocessable Entity in 1085ms (Views: 12.9ms | ActiveRecord: 29.3ms)
+
+
+Started POST "/auth" for 127.0.0.1 at 2018-04-26 19:26:30 -0300
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"wdmeida@gmail.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'wdmeida@gmail.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.49ms)
+Completed 422 Unprocessable Entity in 198ms (Views: 1.4ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/auth" for 127.0.0.1 at 2018-04-26 19:26:57 -0300
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"wagner@almeida.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"wagner@almeida.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'wagner@almeida.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = '6nYJ8zw7yPPCf9cjYFV4' LIMIT 1[0m
+  [1m[36mUser Create (2.0ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`, `uid`, `name`, `tokens`) VALUES ('wagner@almeida.com', '$2a$11$vLZZUHgg9zYDD0WDJQd/KuMpBID6GaP9jD67R0K6ACfxf.w/J2m9y', '2018-04-26 22:26:57', '2018-04-26 22:26:57', '6nYJ8zw7yPPCf9cjYFV4', 'wagner@almeida.com', 'Wagner', '{}')[0m
+  [1m[35m (50.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[36mUser Update (23.1ms)[0m  [1m[33mUPDATE `users` SET `updated_at` = '2018-04-26 22:26:58', `tokens` = '{\"qJVVEtYECmJrkDb8XjP-gA\":{\"token\":\"$2a$10$UZnZO.aASwPsW1TNk2jpletpMNdV2eof0OdPbI/aU.NGCaCkzyBwW\",\"expiry\":1525991218}}' WHERE `users`.`id` = 91[0m
+  [1m[35m (32.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.4ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 91 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[36mUser Update (0.7ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"qJVVEtYECmJrkDb8XjP-gA\":{\"token\":\"$2a$10$25dfh8FWO3Knnj5gV2AcmugcPDDVB.7l19SBZOHr331sF0NR29HEa\",\"expiry\":1525991218,\"last_token\":\"$2a$10$UZnZO.aASwPsW1TNk2jpletpMNdV2eof0OdPbI/aU.NGCaCkzyBwW\",\"updated_at\":\"2018-04-26T19:26:58.225-03:00\"}}' WHERE `users`.`id` = 91[0m
+  [1m[35m (38.9ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.48ms)
+Completed 200 OK in 620ms (Views: 1.0ms | ActiveRecord: 153.3ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:29:17 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.19ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 91 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"qJVVEtYECmJrkDb8XjP-gA\":{\"token\":\"$2a$10$6GLy5Ezpl7HIvBS7fgv0feyMVNz8Dr10jxcqJmy2wzpJz1KgqBlOO\",\"expiry\":1525991357,\"last_token\":\"$2a$10$25dfh8FWO3Knnj5gV2AcmugcPDDVB.7l19SBZOHr331sF0NR29HEa\",\"updated_at\":\"2018-04-26T19:29:17.981-03:00\"}}', `updated_at` = '2018-04-26 22:29:18' WHERE `users`.`id` = 91[0m
+  [1m[35m (51.2ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 253ms (Views: 1.2ms | ActiveRecord: 54.1ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:56:16 -0300
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.44ms)
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.9ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 91 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '6nYJ8zw7yPPCf9cjYFV4' AND `users`.`id` != 91 LIMIT 1[0m
+  [1m[36mUser Update (1.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"qJVVEtYECmJrkDb8XjP-gA\":{\"token\":\"$2a$10$199r4lxLPeCSXtndzX0jheDRu1AAx.NrIsCo5b9liMbzR2FDN.GVC\",\"expiry\":1525992976,\"last_token\":\"$2a$10$6GLy5Ezpl7HIvBS7fgv0feyMVNz8Dr10jxcqJmy2wzpJz1KgqBlOO\",\"updated_at\":\"2018-04-26T19:56:16.386-03:00\"}}', `updated_at` = '2018-04-26 22:56:16' WHERE `users`.`id` = 91[0m
+  [1m[35m (51.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 301ms (Views: 4.1ms | ActiveRecord: 56.8ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:56:21 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 401 Unauthorized in 232ms (Views: 115.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:57:09 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.11ms)
+Completed 401 Unauthorized in 215ms (Views: 109.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:57:13 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 401 Unauthorized in 233ms (Views: 121.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:58:29 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 401 Unauthorized in 196ms (Views: 90.3ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:58:33 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.19ms)
+Completed 401 Unauthorized in 362ms (Views: 120.9ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:58:38 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.22ms)
+Completed 401 Unauthorized in 190ms (Views: 96.6ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:59:46 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 401 Unauthorized in 260ms (Views: 155.5ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:59:50 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.21ms)
+Completed 401 Unauthorized in 189ms (Views: 96.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 19:59:58 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.19ms)
+Completed 401 Unauthorized in 200ms (Views: 96.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 20:00:01 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.18ms)
+Completed 401 Unauthorized in 186ms (Views: 93.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-04-26 20:00:16 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.57ms)
+Completed 401 Unauthorized in 247ms (Views: 102.5ms | ActiveRecord: 0.9ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-04-26 20:00:22 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (3.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.14ms)
+Completed 404 Not Found in 209ms (Views: 93.7ms | ActiveRecord: 3.2ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-04-26 20:00:33 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wagner@almeida.com' LIMIT 1[0m  [["uid", "wagner@almeida.com"], ["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 404 Not Found in 202ms (Views: 99.1ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/auth" for 127.0.0.1 at 2018-04-26 20:01:31 -0300
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"waguinho@gmail.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"waguinho@gmail.com", "name"=>"Wagner", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.2ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'waguinho@gmail.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (1.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = 'zyaDxZkYXGqa1LHFA2aw' LIMIT 1[0m
+  [1m[36mUser Create (4.6ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`, `uid`, `name`, `tokens`) VALUES ('waguinho@gmail.com', '$2a$11$twt.BwPVMTzkD8UNO6wN7Om.5JR.AKd6mv8H3GNDyGKpmtl3CDtSm', '2018-04-26 23:01:32', '2018-04-26 23:01:32', 'zyaDxZkYXGqa1LHFA2aw', 'waguinho@gmail.com', 'Wagner', '{}')[0m
+  [1m[35m (82.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'zyaDxZkYXGqa1LHFA2aw' AND `users`.`id` != 92 LIMIT 1[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"OJoGkQ_CRlVCoRJ5wEbyFw\":{\"token\":\"$2a$10$PP5xHo1Xd.zdwCjqDXPHpON0JcdYqrxGB7640/lZOULw2Xidmw27C\",\"expiry\":1525993292}}' WHERE `users`.`id` = 92[0m
+  [1m[35m (34.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'zyaDxZkYXGqa1LHFA2aw' AND `users`.`id` != 92 LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 92 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'zyaDxZkYXGqa1LHFA2aw' AND `users`.`id` != 92 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"OJoGkQ_CRlVCoRJ5wEbyFw\":{\"token\":\"$2a$10$DySMrDgvgJI65Rhw01.ANOMsCRDcC3Bv.8F/JJAK9PGx.iRoLqCsu\",\"expiry\":1525993292,\"last_token\":\"$2a$10$PP5xHo1Xd.zdwCjqDXPHpON0JcdYqrxGB7640/lZOULw2Xidmw27C\",\"updated_at\":\"2018-04-26T20:01:32.358-03:00\"}}' WHERE `users`.`id` = 92[0m
+  [1m[35m (31.2ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.62ms)
+Completed 200 OK in 623ms (Views: 3.0ms | ActiveRecord: 159.9ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-04-26 20:01:35 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'waguinho@gmail.com' LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'zyaDxZkYXGqa1LHFA2aw' AND `users`.`id` != 92 LIMIT 1[0m
+  [1m[36mUser Update (2.2ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{}', `updated_at` = '2018-04-26 23:01:35' WHERE `users`.`id` = 92[0m
+  [1m[35m (50.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'waguinho@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (3.28ms)
+Completed 200 OK in 179ms (Views: 7.0ms | ActiveRecord: 54.8ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:21:43 -0300
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.28ms)
+  [1m[36mUser Exists (2.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (1.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Completed 401 Unauthorized in 259ms (Views: 6.4ms | ActiveRecord: 6.0ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:21:50 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (3.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$yyx.c0Y3JSILOimy9jTT6e26XpArN.vgNhi2Rbth2T86RwkbuVICG\",\"expiry\":1525906256,\"last_token\":\"$2a$10$4WqZtYbUH2mV3PHeOSkLK.ExlRDCCP8e.Re4pqE6R2c5qxnkUL..i\",\"updated_at\":\"2018-04-25T19:50:56.898-03:00\"},\"73EGggarm8hI-JRHFwEZzw\":{\"token\":\"$2a$10$saDIgzKGP1fMI/yX2C9vxep839t58u.lKq5S5yollLSilBYCnmFDy\",\"expiry\":1525994510}}', `updated_at` = '2018-04-26 23:21:50' WHERE `users`.`id` = 90[0m
+  [1m[35m (42.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (0.6ms)[0m  [1m[33mUPDATE `users` SET `sign_in_count` = 3, `current_sign_in_at` = '2018-04-26 23:21:50', `last_sign_in_at` = '2018-04-25 01:15:26' WHERE `users`.`id` = 90[0m
+  [1m[35m (35.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.18ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (1.9ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$yyx.c0Y3JSILOimy9jTT6e26XpArN.vgNhi2Rbth2T86RwkbuVICG\",\"expiry\":1525906256,\"last_token\":\"$2a$10$4WqZtYbUH2mV3PHeOSkLK.ExlRDCCP8e.Re4pqE6R2c5qxnkUL..i\",\"updated_at\":\"2018-04-25T19:50:56.898-03:00\"},\"73EGggarm8hI-JRHFwEZzw\":{\"token\":\"$2a$10$7cWOui.P6ju0t66CircLo.y3Yp79mSWqwd7N7JRkJT66.R1y83.MK\",\"expiry\":1525994511,\"last_token\":\"$2a$10$saDIgzKGP1fMI/yX2C9vxep839t58u.lKq5S5yollLSilBYCnmFDy\",\"updated_at\":\"2018-04-26T20:21:51.043-03:00\"}}', `updated_at` = '2018-04-26 23:21:51' WHERE `users`.`id` = 90[0m
+  [1m[35m (35.7ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 602ms (Views: 0.7ms | ActiveRecord: 123.8ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-04-26 20:21:53 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.7ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"2dXV6ETEpdOd0MdLlMEoiA\":{\"token\":\"$2a$10$ZQs0mBKdciCI6UQICmL8.O07TgCV7Yid708lkSrtUmyht.97L.Cxy\",\"expiry\":1525828525,\"last_token\":\"$2a$10$PZq.nBDF7nDW.emPjoh7/uwr7k.GSXtp/QAUB2AqttTcKaWHpj/m2\",\"updated_at\":\"2018-04-24T22:15:25.319-03:00\"},\"FwofK6cr20Jv69yhkgC_nA\":{\"token\":\"$2a$10$yyx.c0Y3JSILOimy9jTT6e26XpArN.vgNhi2Rbth2T86RwkbuVICG\",\"expiry\":1525906256,\"last_token\":\"$2a$10$4WqZtYbUH2mV3PHeOSkLK.ExlRDCCP8e.Re4pqE6R2c5qxnkUL..i\",\"updated_at\":\"2018-04-25T19:50:56.898-03:00\"}}', `updated_at` = '2018-04-26 23:21:53' WHERE `users`.`id` = 90[0m
+  [1m[35m (153.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.06ms)
+Completed 200 OK in 286ms (Views: 1.4ms | ActiveRecord: 158.0ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:33:41 -0300
+  [1m[35m (0.2ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@bilau.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.21ms)
+Completed 401 Unauthorized in 6ms (Views: 0.9ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:33:54 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@bilau.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.74ms)
+Completed 401 Unauthorized in 7ms (Views: 3.6ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:33:55 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@bilau.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.51ms)
+Completed 401 Unauthorized in 9ms (Views: 4.2ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:33:56 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@bilau.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 401 Unauthorized in 4ms (Views: 0.8ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:33:57 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@bilau.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.1ms)
+Completed 401 Unauthorized in 10ms (Views: 5.7ms | ActiveRecord: 0.8ms)
+
+
+  [1m[35m (0.6ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-04-26 20:34:50 -0300
+  [1m[35m (1.6ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@bilau.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@bilau.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.21ms)
+Completed 401 Unauthorized in 1744ms (Views: 22.4ms | ActiveRecord: 7.8ms)
+
+
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started POST "/auth" for 127.0.0.1 at 2018-04-26 20:36:20 -0300
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "name"=>"Dfdfdfdf", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"wdmeida@gmail.com", "name"=>"Dfdfdfdf", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (3.1ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'wdmeida@gmail.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (1.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[35m (2.5ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.41ms)
+Completed 422 Unprocessable Entity in 1908ms (Views: 20.1ms | ActiveRecord: 13.0ms)
+
+
+  [1m[35m (166.1ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Started POST "/auth" for 127.0.0.1 at 2018-05-17 22:07:41 -0300
+  [1m[35m (0.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (54.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "name"=>"Wagner Almeida", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"wdmeida@gmail.com", "name"=>"Wagner Almeida", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (20.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'wdmeida@gmail.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (0.4ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.46ms)
+Completed 422 Unprocessable Entity in 2828ms (Views: 11.1ms | ActiveRecord: 28.6ms)
+
+
+Started POST "/auth" for 127.0.0.1 at 2018-05-17 22:08:00 -0300
+Processing by DeviseTokenAuth::RegistrationsController#create as JSON
+  Parameters: {"email"=>"ze@maria.com", "name"=>"Wagner Almeida", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>"", "subdomain"=>"", "registration"=>{"email"=>"ze@maria.com", "name"=>"Wagner Almeida", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "confirm_success_url"=>""}}
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+Unpermitted parameters: :subdomain, :format, :registration
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`email` = BINARY 'ze@maria.com' AND `users`.`provider` = 'email' LIMIT 1[0m
+  [1m[36mUser Exists (1.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` IS NULL LIMIT 1[0m
+  [1m[36mUser Exists (0.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = '_UVAimkjczpcpTqZHBzz' LIMIT 1[0m
+  [1m[36mUser Create (1.5ms)[0m  [1m[32mINSERT INTO `users` (`email`, `encrypted_password`, `created_at`, `updated_at`, `auth_token`, `uid`, `name`, `tokens`) VALUES ('ze@maria.com', '$2a$11$PBDYdbXzmX7.hzv1HHr5LOfGC1g85FYj5anonauDv.mQWkn20yy4u', '2018-05-18 01:08:00', '2018-05-18 01:08:00', '_UVAimkjczpcpTqZHBzz', 'ze@maria.com', 'Wagner Almeida', '{}')[0m
+  [1m[35m (62.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (19.5ms)[0m  [1m[33mUPDATE `users` SET `updated_at` = '2018-05-18 01:08:01', `tokens` = '{\"omyokbbjbymzJLqO_HS8pw\":{\"token\":\"$2a$10$KLNPpTYJrr.MBJ8YchM4NeiH3pTuzyNemvEfv34KbKjVMUc7oi8nC\",\"expiry\":1527815280}}' WHERE `users`.`id` = 93[0m
+  [1m[35m (43.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (2.7ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 93 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (1.9ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"omyokbbjbymzJLqO_HS8pw\":{\"token\":\"$2a$10$TfwJgsKE2henjo7LBq7l8.Lo4YIZhAQJ2I7.yh6wftX9FjG0WLB9q\",\"expiry\":1527815281,\"last_token\":\"$2a$10$KLNPpTYJrr.MBJ8YchM4NeiH3pTuzyNemvEfv34KbKjVMUc7oi8nC\",\"updated_at\":\"2018-05-17T22:08:01.117-03:00\"}}' WHERE `users`.`id` = 93[0m
+  [1m[35m (43.6ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (1.06ms)
+Completed 200 OK in 679ms (Views: 7.9ms | ActiveRecord: 183.7ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-05-17 22:08:08 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{}', `updated_at` = '2018-05-18 01:08:08' WHERE `users`.`id` = 93[0m
+  [1m[35m (48.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.08ms)
+Completed 200 OK in 174ms (Views: 1.6ms | ActiveRecord: 50.9ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-05-17 22:08:17 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"ze@maria.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"ze@maria.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'ze@maria.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (2.0ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (3.2ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"7_u_AU98AEHI12_wQdr8eA\":{\"token\":\"$2a$10$9RHjrZTXShljVaXs4NqGD.56iwyMrxVln8lKB4a1iks8JddGg.5ke\",\"expiry\":1527815298}}', `updated_at` = '2018-05-18 01:08:18' WHERE `users`.`id` = 93[0m
+  [1m[35m (40.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (0.6ms)[0m  [1m[33mUPDATE `users` SET `sign_in_count` = 1, `current_sign_in_at` = '2018-05-18 01:08:18', `last_sign_in_at` = '2018-05-18 01:08:18', `current_sign_in_ip` = '127.0.0.1', `last_sign_in_ip` = '127.0.0.1' WHERE `users`.`id` = 93[0m
+  [1m[35m (32.4ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (1.12ms)
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[35m (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (2.6ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 93 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (5.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"7_u_AU98AEHI12_wQdr8eA\":{\"token\":\"$2a$10$Ylv4pE2RjIKEjHvQCW3cM.aQ./exUwr9mxBr3SFf8zTQAfEHVYkbu\",\"expiry\":1527815298,\"last_token\":\"$2a$10$9RHjrZTXShljVaXs4NqGD.56iwyMrxVln8lKB4a1iks8JddGg.5ke\",\"updated_at\":\"2018-05-17T22:08:18.283-03:00\"}}' WHERE `users`.`id` = 93[0m
+  [1m[35m (37.4ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 636ms (Views: 5.9ms | ActiveRecord: 130.2ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-05-17 22:08:55 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (4.2ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.22ms)
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 93 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (1.8ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"7_u_AU98AEHI12_wQdr8eA\":{\"token\":\"$2a$10$QJjgAHno.z8ZLZfTKRO8bOkYtge6GMc685.ole4JTprry3p3Pwo/S\",\"expiry\":1527815336,\"last_token\":\"$2a$10$Ylv4pE2RjIKEjHvQCW3cM.aQ./exUwr9mxBr3SFf8zTQAfEHVYkbu\",\"updated_at\":\"2018-05-17T22:08:56.081-03:00\"}}', `updated_at` = '2018-05-18 01:08:56' WHERE `users`.`id` = 93[0m
+  [1m[35m (38.8ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 246ms (Views: 0.7ms | ActiveRecord: 47.3ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-05-17 22:08:58 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.3ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (0.7ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{}', `updated_at` = '2018-05-18 01:08:59' WHERE `users`.`id` = 93[0m
+  [1m[35m (35.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.16ms)
+Completed 200 OK in 158ms (Views: 6.7ms | ActiveRecord: 40.5ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-05-17 22:32:34 -0300
+  [1m[35m (1.3ms)[0m  [1m[35mSET NAMES utf8,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.18ms)
+  [1m[36mUser Exists (7.4ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Completed 401 Unauthorized in 231ms (Views: 1.9ms | ActiveRecord: 10.3ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-05-17 22:32:42 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (1.52ms)
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Completed 401 Unauthorized in 211ms (Views: 5.8ms | ActiveRecord: 2.6ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-05-17 22:32:45 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"wdmeida@gmail.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (2.8ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'wdmeida@gmail.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[35m (1.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (5.0ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"ZOxgThEm7j0z0a9knlPHHg\":{\"token\":\"$2a$10$/tWbl4lY1j3ra0hoUtq2AO8bxy/M4W7zuWQ3emr5DppUOaE0A/kYu\",\"expiry\":1527816765}}', `updated_at` = '2018-05-18 01:32:46' WHERE `users`.`id` = 90[0m
+  [1m[35m (46.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (2.1ms)[0m  [1m[33mUPDATE `users` SET `sign_in_count` = 4, `current_sign_in_at` = '2018-05-18 01:32:46', `last_sign_in_at` = '2018-04-26 23:21:50' WHERE `users`.`id` = 90[0m
+  [1m[35m (32.2ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.72ms)
+  [1m[36mUser Exists (2.2ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[35m (4.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.9ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 90 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (1.0ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.9ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"ZOxgThEm7j0z0a9knlPHHg\":{\"token\":\"$2a$10$r.d7x0YKDMpVhdyQZXo/tObudPC489k2Yh6r5x8pCsxLZ4TGZvtaO\",\"expiry\":1527816766,\"last_token\":\"$2a$10$/tWbl4lY1j3ra0hoUtq2AO8bxy/M4W7zuWQ3emr5DppUOaE0A/kYu\",\"updated_at\":\"2018-05-17T22:32:46.244-03:00\"}}' WHERE `users`.`id` = 90[0m
+  [1m[35m (28.2ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 654ms (Views: 5.4ms | ActiveRecord: 129.5ms)
+
+
+Started DELETE "/auth/sign_out" for 127.0.0.1 at 2018-05-17 22:33:17 -0300
+Processing by DeviseTokenAuth::SessionsController#destroy as JSON
+  Parameters: {"subdomain"=>"", "session"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (1.3ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY 'xVwuVyHnTBmNTLrfHFH5' AND `users`.`id` != 90 LIMIT 1[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{}', `updated_at` = '2018-05-18 01:33:17' WHERE `users`.`id` = 90[0m
+  [1m[35m (48.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'wdmeida@gmail.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.09ms)
+Completed 200 OK in 158ms (Views: 2.4ms | ActiveRecord: 52.6ms)
+
+
+Started POST "/auth/sign_in" for 127.0.0.1 at 2018-05-17 22:34:08 -0300
+Processing by DeviseTokenAuth::SessionsController#create as JSON
+  Parameters: {"email"=>"ze@maria.com", "password"=>"[FILTERED]", "subdomain"=>"", "session"=>{"email"=>"ze@maria.com", "password"=>"[FILTERED]"}}
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE (BINARY email = 'ze@maria.com' AND provider='email') ORDER BY `users`.`id` ASC LIMIT 1[0m
+Unpermitted parameters: :subdomain, :format, :session
+Unpermitted parameters: :subdomain, :format, :session
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists (0.8ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (5.6ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"hKmcyjZmBtrGamt4QH7gGw\":{\"token\":\"$2a$10$IHEjEoI30fpAkhynJgai5Oo650bMu6o4hCYPPxujisopTv3Z8S4Ve\",\"expiry\":1527816849}}', `updated_at` = '2018-05-18 01:34:09' WHERE `users`.`id` = 93[0m
+  [1m[35m (47.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (6.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (0.9ms)[0m  [1m[33mUPDATE `users` SET `sign_in_count` = 2, `current_sign_in_at` = '2018-05-18 01:34:09' WHERE `users`.`id` = 93[0m
+  [1m[35m (33.3ms)[0m  [1m[35mCOMMIT[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (1.18ms)
+  [1m[36mUser Exists (6.2ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.8ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 93 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.6ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (0.6ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"hKmcyjZmBtrGamt4QH7gGw\":{\"token\":\"$2a$10$HfhDT1gFZFJC9SF/jv4c6ui99LJILg9PI.ivss5mPQt1PqAQHyPly\",\"expiry\":1527816849,\"last_token\":\"$2a$10$IHEjEoI30fpAkhynJgai5Oo650bMu6o4hCYPPxujisopTv3Z8S4Ve\",\"updated_at\":\"2018-05-17T22:34:09.448-03:00\"}}' WHERE `users`.`id` = 93[0m
+  [1m[35m (38.3ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 624ms (Views: 4.7ms | ActiveRecord: 143.4ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-05-17 22:34:42 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.44ms)
+  [1m[36mUser Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 93 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (1.7ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"hKmcyjZmBtrGamt4QH7gGw\":{\"token\":\"$2a$10$PX1xTl1W6MCjZHFS7nifnuF5VjSPDP5vj80Kdrc.ur9EcKa0Ohr..\",\"expiry\":1527816882,\"last_token\":\"$2a$10$HfhDT1gFZFJC9SF/jv4c6ui99LJILg9PI.ivss5mPQt1PqAQHyPly\",\"updated_at\":\"2018-05-17T22:34:42.696-03:00\"}}', `updated_at` = '2018-05-18 01:34:42' WHERE `users`.`id` = 93[0m
+  [1m[35m (33.1ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 251ms (Views: 2.3ms | ActiveRecord: 37.7ms)
+
+
+Started GET "/auth/validate_token" for 127.0.0.1 at 2018-05-17 22:34:53 -0300
+Processing by DeviseTokenAuth::TokenValidationsController#validate_token as application/vnd.taskmanager.v2
+  Parameters: {"token_validation"=>{}}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  `users`.* FROM `users` WHERE `users`.`uid` = 'ze@maria.com' LIMIT 1[0m
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.14ms)
+  [1m[36mUser Exists (0.7ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[37mSELECT  `users`.* FROM `users` WHERE `users`.`id` = 93 LIMIT 1 FOR UPDATE[0m
+  [1m[36mUser Exists (1.9ms)[0m  [1m[34mSELECT  1 AS one FROM `users` WHERE `users`.`auth_token` = BINARY '_UVAimkjczpcpTqZHBzz' AND `users`.`id` != 93 LIMIT 1[0m
+  [1m[36mUser Update (0.5ms)[0m  [1m[33mUPDATE `users` SET `tokens` = '{\"hKmcyjZmBtrGamt4QH7gGw\":{\"token\":\"$2a$10$fhtr2jeJhstwCr5n7gG6d.4fNAK5SU3F.0lHBZrcuPZ9DML7pujqq\",\"expiry\":1527816893,\"last_token\":\"$2a$10$PX1xTl1W6MCjZHFS7nifnuF5VjSPDP5vj80Kdrc.ur9EcKa0Ohr..\",\"updated_at\":\"2018-05-17T22:34:53.389-03:00\"}}', `updated_at` = '2018-05-18 01:34:53' WHERE `users`.`id` = 93[0m
+  [1m[35m (48.0ms)[0m  [1m[35mCOMMIT[0m
+Completed 200 OK in 274ms (Views: 0.6ms | ActiveRecord: 53.5ms)
+
+
+Started GET "/" for 172.18.0.1 at 2018-06-23 18:07:08 +0000
+  
+Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2 "No such file or directory")):
+  
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `connect'
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `initialize'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `new'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `mysql2_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:809:in `new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:853:in `checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:832:in `try_to_checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:793:in `acquire_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:521:in `checkout'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:380:in `connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:1008:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:118:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:90:in `connection'
+activerecord (5.2.0) lib/active_record/migration.rb:554:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.0) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.4) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.2.0) lib/rails/engine.rb:524:in `call'
+puma (3.11.4) lib/puma/configuration.rb:225:in `call'
+puma (3.11.4) lib/puma/server.rb:632:in `handle_request'
+puma (3.11.4) lib/puma/server.rb:446:in `process_client'
+puma (3.11.4) lib/puma/server.rb:306:in `block in run'
+puma (3.11.4) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/favicon.ico" for 172.18.0.1 at 2018-06-23 18:07:09 +0000
+  
+Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2 "No such file or directory")):
+  
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `connect'
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `initialize'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `new'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `mysql2_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:809:in `new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:853:in `checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:832:in `try_to_checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:793:in `acquire_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:521:in `checkout'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:380:in `connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:1008:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:118:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:90:in `connection'
+activerecord (5.2.0) lib/active_record/migration.rb:554:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.0) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.4) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.2.0) lib/rails/engine.rb:524:in `call'
+puma (3.11.4) lib/puma/configuration.rb:225:in `call'
+puma (3.11.4) lib/puma/server.rb:632:in `handle_request'
+puma (3.11.4) lib/puma/server.rb:446:in `process_client'
+puma (3.11.4) lib/puma/server.rb:306:in `block in run'
+puma (3.11.4) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/favicon.ico" for 172.18.0.1 at 2018-06-23 18:07:09 +0000
+  
+Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2 "No such file or directory")):
+  
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `connect'
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `initialize'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `new'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `mysql2_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:809:in `new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:853:in `checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:832:in `try_to_checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:793:in `acquire_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:521:in `checkout'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:380:in `connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:1008:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:118:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:90:in `connection'
+activerecord (5.2.0) lib/active_record/migration.rb:554:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.0) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.4) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.2.0) lib/rails/engine.rb:524:in `call'
+puma (3.11.4) lib/puma/configuration.rb:225:in `call'
+puma (3.11.4) lib/puma/server.rb:632:in `handle_request'
+puma (3.11.4) lib/puma/server.rb:446:in `process_client'
+puma (3.11.4) lib/puma/server.rb:306:in `block in run'
+puma (3.11.4) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 172.18.0.1 at 2018-06-23 18:07:28 +0000
+  
+Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2 "No such file or directory")):
+  
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `connect'
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `initialize'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `new'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `mysql2_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:809:in `new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:853:in `checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:832:in `try_to_checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:793:in `acquire_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:521:in `checkout'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:380:in `connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:1008:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:118:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:90:in `connection'
+activerecord (5.2.0) lib/active_record/migration.rb:554:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.0) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.4) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.2.0) lib/rails/engine.rb:524:in `call'
+puma (3.11.4) lib/puma/configuration.rb:225:in `call'
+puma (3.11.4) lib/puma/server.rb:632:in `handle_request'
+puma (3.11.4) lib/puma/server.rb:446:in `process_client'
+puma (3.11.4) lib/puma/server.rb:306:in `block in run'
+puma (3.11.4) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 172.18.0.1 at 2018-06-23 18:09:31 +0000
+  
+Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2 "No such file or directory")):
+  
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `connect'
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `initialize'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `new'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `mysql2_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:809:in `new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:853:in `checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:832:in `try_to_checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:793:in `acquire_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:521:in `checkout'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:380:in `connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:1008:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:118:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:90:in `connection'
+activerecord (5.2.0) lib/active_record/migration.rb:554:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.0) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.4) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.2.0) lib/rails/engine.rb:524:in `call'
+puma (3.11.4) lib/puma/configuration.rb:225:in `call'
+puma (3.11.4) lib/puma/server.rb:632:in `handle_request'
+puma (3.11.4) lib/puma/server.rb:446:in `process_client'
+puma (3.11.4) lib/puma/server.rb:306:in `block in run'
+puma (3.11.4) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+Started GET "/" for 172.18.0.1 at 2018-06-23 18:20:11 +0000
+  
+Mysql2::Error::ConnectionError (Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2 "No such file or directory")):
+  
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `connect'
+mysql2 (0.5.1) lib/mysql2/client.rb:90:in `initialize'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `new'
+activerecord (5.2.0) lib/active_record/connection_adapters/mysql2_adapter.rb:22:in `mysql2_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:809:in `new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:853:in `checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:832:in `try_to_checkout_new_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:793:in `acquire_connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:521:in `checkout'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:380:in `connection'
+activerecord (5.2.0) lib/active_record/connection_adapters/abstract/connection_pool.rb:1008:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:118:in `retrieve_connection'
+activerecord (5.2.0) lib/active_record/connection_handling.rb:90:in `connection'
+activerecord (5.2.0) lib/active_record/migration.rb:554:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.0) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.0) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.0) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.0) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.0) lib/rails/rack/logger.rb:26:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.4) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.0) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.0) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
+rack-cors (1.0.2) lib/rack/cors.rb:97:in `call'
+railties (5.2.0) lib/rails/engine.rb:524:in `call'
+puma (3.11.4) lib/puma/configuration.rb:225:in `call'
+puma (3.11.4) lib/puma/server.rb:632:in `handle_request'
+puma (3.11.4) lib/puma/server.rb:446:in `process_client'
+puma (3.11.4) lib/puma/server.rb:306:in `block in run'
+puma (3.11.4) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
