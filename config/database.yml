@@ -5,3 +5,15 @@ default: &default
   username: root
   password: root
   host: mysql
+
+development:
+  <<: *default
+  database: task_manager_api_development
+
+test:
+  <<: *default
+  database: task_manager_api_test
+
+production:
+  <<: *default
+  database: task_manager_api_production
